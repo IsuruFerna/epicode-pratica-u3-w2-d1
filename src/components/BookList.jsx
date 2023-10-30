@@ -7,7 +7,7 @@ import { Component } from "react";
 
 class BookList extends Component {
    state = {
-      selectedBook: "0316438960",
+      selectedBook: null,
    };
 
    setSelectedBook = (newSelected) => {

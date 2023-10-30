@@ -11,6 +11,17 @@ class AddComment extends Component {
       },
    };
 
+   componentDidUpdate(prevProps) {
+      if (prevProps.elementId !== this.props.elementId) {
+         this.setState({
+            comment: {
+               ...this.state.commentObj,
+               elementId: this.props.elementId,
+            },
+         });
+      }
+   }
+
    postNewComment = (e) => {
       e.preventDefault();
       fetch("https://striveschool-api.herokuapp.com/api/comments/", {

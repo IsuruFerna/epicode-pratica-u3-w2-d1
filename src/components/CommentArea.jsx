@@ -15,8 +15,6 @@ class CommentArea extends Component {
       fetch(
          "https://striveschool-api.herokuapp.com/api/comments/" +
             this.props.selectedBook,
-         // "https://striveschool-api.herokuapp.com/api/comments/" +
-         //    this.props.elementId,
          {
             headers: {
                Authorization:
@@ -47,12 +45,25 @@ class CommentArea extends Component {
          });
    };
 
+   // fetch default data
    componentDidMount() {
-      this.getComments();
+      if (this.props.selectedBook) {
+         this.getComments();
+      }
+   }
+
+   // update fetch data everytime when user clicks on a book
+   componentDidUpdate(prevProps, prevState) {
+      if (
+         this.props.selectedBook &&
+         prevProps.selectedBook !== this.props.selectedBook
+      ) {
+         this.getComments();
+      }
    }
 
    render() {
-      console.log("uni: ", this.props);
+      console.log("comt area selected book:", this.props.selectedBook);
       return (
          <div className="p-3 border rounded-1">
             {this.state.isLoading && (
@@ -62,7 +73,7 @@ class CommentArea extends Component {
             )}
             {this.state.isError && <ComponentError />}
             <CommentList comments={this.state.comments} />
-            <AddComment elementId={this.props.elementId} />
+            <AddComment elementId={this.props.selectedBook} />
          </div>
       );
    }
